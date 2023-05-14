@@ -35,18 +35,31 @@ CREATE TABLE likes (
                        seen_status BOOLEAN DEFAULT FALSE
 );
 
+-- Удаление таблицы chats, если она существует
+DROP TABLE IF EXISTS chats CASCADE;
+
+-- Создание таблицы chats
+CREATE TABLE chats (
+                       chat_id SERIAL PRIMARY KEY,
+                       user_id BIGINT NOT NULL,
+                       date_of_create TIMESTAMP DEFAULT now()
+);
+
+
 -- Удаление таблицы messages, если она существует
 DROP TABLE IF EXISTS messages;
 
 -- Создание таблицы messages
 CREATE TABLE messages (
                           message_id SERIAL PRIMARY KEY,
+                          chat_id INT,
                           sender_id BIGINT NOT NULL,
                           recipient_id BIGINT NOT NULL,
                           message TEXT,
                           date_of_send TIMESTAMP DEFAULT now(),
                           seen_status BOOLEAN DEFAULT FALSE
 );
+
 
 -- Удаление таблицы posts, если она существует
 DROP TABLE IF EXISTS posts CASCADE;
@@ -56,6 +69,7 @@ CREATE TABLE posts (
                        post_id BIGINT PRIMARY KEY,
                        user_id BIGINT,
                        message TEXT,
+                       content TEXT,
                        date_of_create TIMESTAMP DEFAULT now()
 );
 
@@ -80,18 +94,8 @@ CREATE TABLE posts_statistics (
                                   comment_count INTEGER DEFAULT 0
 );
 
--- Удаление таблицы profiles, если она существует
-DROP TABLE IF EXISTS profiles;
-
--- Создание таблицы profiles
-CREATE TABLE profiles (
-                          user_id BIGINT PRIMARY KEY,
-                          nickname VARCHAR(255) NOT NULL,
-                          photo VARCHAR(255)
-);
-
 -- Удаление таблицы users, если она существует
-DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS users CASCADE;
 
 -- Создание таблицы users
 CREATE TABLE users (
@@ -104,6 +108,17 @@ CREATE TABLE users (
                        date_of_last_in DATE
 );
 
+-- Удаление таблицы profiles, если она существует
+DROP TABLE IF EXISTS profiles;
+
+-- Создание таблицы profiles
+CREATE TABLE profiles (
+                          profile_id SERIAL PRIMARY KEY,
+                          user_id BIGINT,
+                          nickname VARCHAR(255) NOT NULL,
+                          photo VARCHAR(255)
+);
+
 -- Создание внешних ключей
 ALTER TABLE comments ADD CONSTRAINT FK_comments_users FOREIGN KEY (user_id) REFERENCES users (user_id);
 ALTER TABLE comments ADD CONSTRAINT FK_comments_posts FOREIGN KEY (post_id) REFERENCES posts (post_id);
@@ -114,6 +129,8 @@ ALTER TABLE likes ADD CONSTRAINT FK_likes_users FOREIGN KEY (user_id) REFERENCES
 ALTER TABLE likes ADD CONSTRAINT FK_likes_posts FOREIGN KEY (post_id) REFERENCES posts (post_id);
 ALTER TABLE messages ADD CONSTRAINT FK_messages_users_sender FOREIGN KEY (sender_id) REFERENCES users (user_id);
 ALTER TABLE messages ADD CONSTRAINT FK_messages_users_recipient FOREIGN KEY (recipient_id) REFERENCES users (user_id);
+ALTER TABLE messages ADD CONSTRAINT FK_messages_chat FOREIGN KEY (chat_id) REFERENCES  chats (chat_id);
+ALTER TABLE chats ADD CONSTRAINT FK_chats_users FOREIGN KEY (user_id) REFERENCES users(user_id);
 ALTER TABLE posts ADD CONSTRAINT FK_posts_users FOREIGN KEY (user_id) REFERENCES users (user_id);
 ALTER TABLE posts_seen ADD CONSTRAINT FK_posts_seen_users FOREIGN KEY (user_id) REFERENCES users (user_id);
 ALTER TABLE posts_seen ADD CONSTRAINT FK_posts_seen_posts FOREIGN KEY (post_id) REFERENCES posts (post_id);
