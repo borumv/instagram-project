@@ -15,10 +15,12 @@ public class Profile implements  BaseEntity<Long>{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "nickname")
     private String nickName;
     private String photo;
 
-    @OneToOne(targetEntity = User.class)
+    @OneToOne
+    @JoinColumn(name = "user_id")
     User user;
 
 }

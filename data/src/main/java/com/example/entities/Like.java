@@ -14,6 +14,7 @@ public class Like implements BaseEntity<Long>, Seenable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "like_id")
     private Long id;
 
     @Column(name = "seen_status")

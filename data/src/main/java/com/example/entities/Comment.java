@@ -14,6 +14,7 @@ import java.util.Set;
 public class Comment implements BaseEntity<Long>, Seenable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "comment_id")
     private Long id;
 
     @Column(name = "comment_text")

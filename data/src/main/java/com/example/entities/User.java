@@ -36,7 +36,7 @@ public class User implements BaseEntity<Long> {
     @Column(name = "date_of_last_in")
     private Timestamp dateOfLastIn;
 
-    @OneToOne
+    @OneToOne(mappedBy = "user")
     private Profile profile;
 
     @OneToMany(mappedBy = "user")

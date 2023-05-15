@@ -14,6 +14,7 @@ import java.util.Set;
 public class Post implements BaseEntity<Long> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "post_id")
     private Long id;
 
     private String message;
@@ -26,10 +27,10 @@ public class Post implements BaseEntity<Long> {
     @JoinColumn(name = "user_id")
     User user;
 
-    @OneToMany
+    @OneToMany(mappedBy = "post")
     private Set<Like> likes;
 
-    @OneToMany
+    @OneToMany(mappedBy = "post")
     private Set<Comment> comments;
 
 
