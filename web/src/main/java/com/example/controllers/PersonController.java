@@ -18,4 +18,5 @@ public class PersonController {
     public UserDTO getUser(@PathVariable Long id) {
         return UserDTO.toUserDTO(userService.findById(id));
     }
+
 }
