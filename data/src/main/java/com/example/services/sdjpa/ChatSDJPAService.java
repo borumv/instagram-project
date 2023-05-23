@@ -21,14 +21,12 @@ public class ChatSDJPAService implements ChatService {
     @Override
     public Chat findById(Long aLong) {
         return chatRepository.findById(aLong).orElseThrow(() -> {
-            log.error("NotFoundException with chatId: {}", aLong);
             throw  new NotFoundException("Chat with id");
         });
     }
 
     @Override
     public Set<Chat> findAll() {
-        log.info("class: ChatSDJPAService, invoke method: findAll()");
         Set<Chat> chats = new HashSet<>();
         chatRepository.findAll().forEach(chats::add);
         return chats;
@@ -36,21 +34,17 @@ public class ChatSDJPAService implements ChatService {
 
     @Override
     public Chat save(Chat chat) {
-        log.info("class: ChatSDJPAService, invoke method: save(Chat chat), chatId - {}", chat.getId());
         return chatRepository.save(chat);
     }
 
     @Override
     public void delete(Chat chat) {
-        log.info("class: ChatSDJPAService, invoke method: delete(Chat chat), chatId - {}", chat.getId());
         chatRepository.delete(chat);
     }
 
     @Override
     public void deleteById(Long aLong) {
-        log.info("class: ChatSDJPAService, invoke method: deleteById(Long chatId), userId - {}", aLong);
         chatRepository.deleteById(aLong);
     }
-
 
 }

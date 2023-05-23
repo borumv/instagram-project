@@ -22,14 +22,12 @@ public class CommentSDJPAService implements CommentService {
     @Override
     public Comment findById(Long aLong) {
         return commentRepository.findById(aLong).orElseThrow(() -> {
-            log.error("NotFoundException with comment: {}", aLong);
             throw  new NotFoundException("Comment with id");
         });
     }
 
     @Override
     public Set<Comment> findAll() {
-        log.info("class: CommentSDJPAService, invoke method: findAll()");
         Set<Comment> chats = new HashSet<>();
         commentRepository.findAll().forEach(chats::add);
         return chats;
@@ -37,19 +35,16 @@ public class CommentSDJPAService implements CommentService {
 
     @Override
     public Comment save(Comment comment) {
-        log.info("class: CommentSDJPAService, invoke method: save(Comment comment), commentId - {}", comment.getId());
         return commentRepository.save(comment);
     }
 
     @Override
     public void delete(Comment comment) {
-        log.info("class: CommentSDJPAService, invoke method: delete(Comment comment), commentId - {}", comment.getId());
         commentRepository.delete(comment);
     }
 
     @Override
     public void deleteById(Long aLong) {
-        log.info("class: CommentSDJPAService, invoke method: deleteById(Long commentId), commentId - {}", aLong);
         commentRepository.deleteById(aLong);
     }
 
