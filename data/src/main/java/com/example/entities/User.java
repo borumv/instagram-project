@@ -3,18 +3,16 @@ package com.example.entities;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
+@NamedEntityGraph(name = "User.followers",
+    attributeNodes = @NamedAttributeNode("followers"))
 @Data
 @Entity
 @Table(name = "users")
-
 public class User implements BaseEntity<Long> {
 
     @Builder
@@ -26,7 +24,6 @@ public class User implements BaseEntity<Long> {
         this.password = password;
         this.dateOfRegistry = dateOfRegistry;
         this.dateOfLastIn = dateOfLastIn;
-        this.profile = profile;
         this.posts = posts;
         this.followers = followers;
         this.following = following;
@@ -55,22 +52,22 @@ public class User implements BaseEntity<Long> {
     @Column(name = "date_of_last_in")
     private Timestamp dateOfLastIn;
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private Profile profile;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     List<Post> posts;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "followers",
                 joinColumns = @JoinColumn(name = "user_id"),
                 inverseJoinColumns = @JoinColumn(name = "friend_id"))
-    Set<User> followers;
+    Set<User> followers = new HashSet<>();
 
     @ManyToMany(mappedBy = "followers", fetch = FetchType.LAZY)
-    Set<User> following;
+    Set<User> following =  new HashSet<>();
 
-    // Остальные поля пользователя
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Chat> chats = new ArrayList<>();
 
@@ -83,5 +80,25 @@ public class User implements BaseEntity<Long> {
 
     public User() {
 
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        if (!id.equals(user.id)) return false;
+        if (!Objects.equals(firstName, user.firstName)) return false;
+        return Objects.equals(lastName, user.lastName);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
+        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+        return result;
     }
 }
