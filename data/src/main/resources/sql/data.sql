@@ -86,3 +86,9 @@ VALUES
     (1, 1, 1),
     (2, 2, 2),
     (3, 3, 3);
+
+
+SELECT *
+FROM users u
+         INNER JOIN followers f ON u.user_id = f.friend_id
+WHERE f.user_id = 1;

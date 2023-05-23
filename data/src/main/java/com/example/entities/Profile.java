@@ -19,8 +19,8 @@ public class Profile implements  BaseEntity<Long>{
     private String nickName;
     private String photo;
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    User user;
+    //@OneToOne
+    //@JoinColumn(name = "user_id")
+    //User user;
 
 }
