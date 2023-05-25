@@ -1,14 +1,12 @@
 package com.example.services.sdjpa;
 
 import com.example.entities.Profile;
-import com.example.entities.User;
-import com.example.exceptions.NotFoundException;
+import com.example.exceptions.ProfileNotFoundException;
 import com.example.repositories.ProfileRepository;
 import com.example.services.ProfileService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,16 +14,13 @@ import java.util.Set;
 @Service
 @Slf4j
 public class ProfileSDJPAService implements ProfileService {
-
     private final ProfileRepository profileRepository;
     @Override
     public Profile findById(Long aLong) {
             return profileRepository.findById(aLong).orElseThrow(() -> {
-                throw  new NotFoundException(String.format("Profile with id %d", aLong));
+                throw  new ProfileNotFoundException(String.valueOf(aLong));
             });
         }
-
-
     @Override
     public Set<Profile> findAll() {
         Set<Profile> users = new HashSet<>();
@@ -40,11 +35,24 @@ public class ProfileSDJPAService implements ProfileService {
 
     @Override
     public void delete(Profile profile) {
+        if(profile.getId() == null){
+            throw new ProfileNotFoundException("null");
+        }
         profileRepository.delete(profile);
     }
 
     @Override
     public void deleteById(Long aLong) {
         profileRepository.deleteById(aLong);
+    }
+
+    @Override
+    public Set<Profile> findAllFollowersByProfileId(Long userId) {
+        return profileRepository.findAllFollowersByProfileId(userId);
+    }
+
+    @Override
+    public Set<Profile> findAllFollowingByProfileId(Long userId) {
+        return profileRepository.findAllFollowingByProfileId(userId);
     }
 }
