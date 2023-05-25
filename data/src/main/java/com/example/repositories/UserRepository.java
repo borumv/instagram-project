@@ -13,5 +13,8 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
     @Query("SELECT u FROM User u JOIN FETCH u.followers")
     Set<User> findFollowersByUserId(Long userId);
+
+    @Query("SELECT u FROM User u JOIN FETCH u.following")
+    Set<User> findFollowingByUserId(Long userId);
 }
 
