@@ -2,7 +2,7 @@ package com.example.services.sdjpa;
 
 
 import com.example.entities.User;
-import com.example.exceptions.NotFoundException;
+import com.example.exceptions.UserNotFoundException;
 import com.example.repositories.UserRepository;
 import com.example.services.UserService;
 import lombok.AllArgsConstructor;
@@ -20,7 +20,7 @@ public class UserSDJPAService implements UserService {
     @Override
     public User findById(Long aLong) {
         return userRepository.findById(aLong).orElseThrow(() -> {
-            throw  new NotFoundException("User with id");
+            throw  new UserNotFoundException(String.valueOf(aLong));
         });
     }
 
@@ -38,6 +38,9 @@ public class UserSDJPAService implements UserService {
 
     @Override
     public void delete(User user) {
+        if(user.getId() == null){
+            throw new UserNotFoundException("null");
+        }
         userRepository.delete(user);
     }
 
@@ -48,13 +51,11 @@ public class UserSDJPAService implements UserService {
 
     @Override
     public Set<User> findAllFollowersByUserId(Long userId) {
-
         return userRepository.findFollowersByUserId(userId);
     }
 
     @Override
     public Set<User> findAllFollowingByUserId(Long userId) {
-        return findById(userId)
-                .getFollowing();
+        return userRepository.findFollowingByUserId(userId);
     }
 }
