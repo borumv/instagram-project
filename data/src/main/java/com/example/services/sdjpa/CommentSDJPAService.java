@@ -2,7 +2,8 @@ package com.example.services.sdjpa;
 
 import com.example.entities.Chat;
 import com.example.entities.Comment;
-import com.example.exceptions.NotFoundException;
+
+import com.example.exceptions.CommentNotFoundEWxception;
 import com.example.repositories.ChatRepository;
 import com.example.repositories.CommentRepository;
 import com.example.services.CommentService;
@@ -22,7 +23,7 @@ public class CommentSDJPAService implements CommentService {
     @Override
     public Comment findById(Long aLong) {
         return commentRepository.findById(aLong).orElseThrow(() -> {
-            throw  new NotFoundException("Comment with id");
+            throw  new CommentNotFoundEWxception(String.valueOf(aLong));
         });
     }
 
