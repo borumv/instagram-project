@@ -3,7 +3,7 @@ package com.example.services.sdjpa;
 
 import com.example.entities.Comment;
 import com.example.entities.Message;
-import com.example.exceptions.NotFoundException;
+import com.example.exceptions.MessageNotFoundException;
 import com.example.repositories.MessageRepository;
 import com.example.services.MessageService;
 import lombok.AllArgsConstructor;
@@ -22,7 +22,7 @@ public class MessageSDJPAService implements MessageService {
     @Override
     public Message findById(Long messageId) {
         return messageRepository.findById(messageId).orElseThrow(() -> {
-            throw  new NotFoundException("Comment with id");
+            throw  new MessageNotFoundException(String.valueOf(messageId));
         });
     }
 
