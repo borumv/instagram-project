@@ -1,7 +1,5 @@
 package com.example.controllers;
 
-
-import com.example.entities.User;
 import com.example.models.dto.UserDTO;
 import com.example.models.mappers.UserMapper;
 import com.example.services.UserService;
@@ -40,6 +38,4 @@ public class PersonController {
                 .map(userMapper::userToUserDTO)
                 .collect(Collectors.toSet());
     }
-
-
 }

@@ -1,8 +1,7 @@
 package com.example.services.sdjpa;
 
-import com.example.entities.Message;
 import com.example.entities.Post;
-import com.example.exceptions.NotFoundException;
+import com.example.exceptions.PostNotFoundException;
 import com.example.repositories.PostRepository;
 import com.example.services.PostService;
 import lombok.AllArgsConstructor;
@@ -20,9 +19,9 @@ public class PostSDJPAService implements PostService {
 
     private final PostRepository postRepository;
     @Override
-    public Post findById(Long messageId) {
-        return postRepository.findById(messageId).orElseThrow(() -> {
-            throw  new NotFoundException("Post with id");
+    public Post findById(Long postId) {
+        return postRepository.findById(postId).orElseThrow(() -> {
+            throw  new PostNotFoundException(String.valueOf(postId));
         });
     }
 
