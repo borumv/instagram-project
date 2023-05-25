@@ -1,6 +1,7 @@
 package com.example.entities;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,7 +9,15 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "profiles")
+
 public class Profile implements  BaseEntity<Long>{
+
+    @Builder
+    public Profile(Long id, String nickName, String photo) {
+        this.id = id;
+        this.nickName = nickName;
+        this.photo = photo;
+    }
 
     @Id
     @Column(name = "profile_id")
@@ -19,8 +28,7 @@ public class Profile implements  BaseEntity<Long>{
     private String nickName;
     private String photo;
 
-    //@OneToOne
-    //@JoinColumn(name = "user_id")
-    //User user;
+    public Profile() {
 
+    }
 }
