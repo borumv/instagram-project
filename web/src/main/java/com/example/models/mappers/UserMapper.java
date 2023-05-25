@@ -12,9 +12,10 @@ import org.springframework.stereotype.Component;
 public interface UserMapper {
 
     UserMapper MAPPER = Mappers.getMapper( UserMapper.class );
-//    UserDTO sourceToDestination(User source);
-//    User destinationToSource(SimpleDestination destination);
     @Mapping(source = "profile.nickName", target = "nickName")
     @Mapping(source = "profile.photo", target = "photoUrl")
+//    @Mapping(source = "followers.size()", target = "countFollowers")
+//    @Mapping(source = "followings.size()", target = "countFollowings")
+//    @Mapping(source = "posts.size()", target = "countPosts")
     UserDTO userToUserDTO(User user);
 }

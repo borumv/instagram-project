@@ -9,5 +9,8 @@ public class UserDTO {
     private String lastName;
     private String nickName;
     private String photoUrl;
+    private Integer countFollowers;
+    private Integer countFollowings;
+    private Integer countPosts;
     private Long id;
 }
