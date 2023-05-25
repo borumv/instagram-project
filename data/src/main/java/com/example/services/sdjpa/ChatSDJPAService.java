@@ -2,7 +2,7 @@ package com.example.services.sdjpa;
 
 import com.example.entities.Chat;
 import com.example.entities.User;
-import com.example.exceptions.NotFoundException;
+import com.example.exceptions.ChatNotFoundException;
 import com.example.repositories.ChatRepository;
 import com.example.services.ChatService;
 import lombok.AllArgsConstructor;
@@ -21,7 +21,7 @@ public class ChatSDJPAService implements ChatService {
     @Override
     public Chat findById(Long aLong) {
         return chatRepository.findById(aLong).orElseThrow(() -> {
-            throw  new NotFoundException("Chat with id");
+            throw  new ChatNotFoundException(String.valueOf(aLong));
         });
     }
 
