@@ -1,8 +1,7 @@
 package com.example.services.sdjpa;
 
-import com.example.entities.Chat;
 import com.example.entities.Like;
-import com.example.exceptions.NotFoundException;
+import com.example.exceptions.LikeNotFoundException;
 import com.example.repositories.LikeRepository;
 import com.example.services.LikeService;
 import lombok.AllArgsConstructor;
@@ -22,7 +21,7 @@ public class LikeSDJPAService implements LikeService {
     public Like findById(Long aLong) {
         return likeRepository.findById(aLong).orElseThrow(() -> {
             log.error("NotFoundException with chatId: {}", aLong);
-            throw new NotFoundException("Chat with id");
+            throw new LikeNotFoundException(String.valueOf(aLong));
         });
     }
 
