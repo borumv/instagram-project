@@ -1,4 +1,4 @@
-package com.example.services;
+package com.example.services.sdjpa;
 
 import com.example.entities.Post;
 import com.example.entities.User;

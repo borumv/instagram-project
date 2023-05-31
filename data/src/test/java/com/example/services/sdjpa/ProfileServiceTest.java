@@ -1,4 +1,4 @@
-package com.example.services;
+package com.example.services.sdjpa;
 
 import com.example.entities.Profile;
 import com.example.entities.User;

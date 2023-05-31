@@ -5,12 +5,9 @@ import com.example.entities.Like;
 import com.example.entities.Post;
 import com.example.entities.User;
 import com.example.exceptions.PostNotFoundException;
-import com.example.exceptions.UserNotFoundException;
 import com.example.repositories.CommentRepository;
 import com.example.repositories.LikeRepository;
 import com.example.repositories.PostRepository;
-import com.example.repositories.UserRepository;
-import com.example.services.PostService;
 import com.example.services.UserService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,7 +27,7 @@ import static org.mockito.Mockito.*;
 class PostSDJPAServiceTest {
 
 
-    static Long POST_ID = 1L;
+    static Long LIKE_ID = 1L;
     User user;
     User user2;
     User user3;
@@ -73,7 +70,7 @@ class PostSDJPAServiceTest {
                 .email("jora@mail.com")
                 .build();
         post = Post.builder()
-                .id(POST_ID)
+                .id(LIKE_ID)
                 .content("content.jpg")
                 .user(user)
                 .build();
@@ -86,23 +83,23 @@ class PostSDJPAServiceTest {
     @Test
     void findById() {
         //given
-        when(postRepository.findById(POST_ID)).thenReturn(Optional.ofNullable(post));
+        when(postRepository.findById(LIKE_ID)).thenReturn(Optional.ofNullable(post));
         //when
-        Post post = postService.findById(POST_ID);
+        Post post = postService.findById(LIKE_ID);
         //then
-        assertEquals(POST_ID, post.getId());
-        verify(postRepository, times(1)).findById(POST_ID);
+        assertEquals(LIKE_ID, post.getId());
+        verify(postRepository, times(1)).findById(LIKE_ID);
     }
 
     @Test
     void findByIdThrowsMessageNotFoundException() {
 
-        when(postRepository.findById(POST_ID)).thenReturn(Optional.empty());
+        when(postRepository.findById(LIKE_ID)).thenReturn(Optional.empty());
         // Act & Assert
         Assertions.assertThrows(PostNotFoundException.class, () -> {
-            postService.findById(POST_ID);
+            postService.findById(LIKE_ID);
         });
-        verify(postRepository, times(1)).findById(POST_ID);
+        verify(postRepository, times(1)).findById(LIKE_ID);
     }
 
 
@@ -130,8 +127,8 @@ class PostSDJPAServiceTest {
 
     @Test
     void deleteById() {
-        postService.deleteById(POST_ID);
-        verify(postRepository, times(1)).deleteById(POST_ID);
+        postService.deleteById(LIKE_ID);
+        verify(postRepository, times(1)).deleteById(LIKE_ID);
     }
 
     @Test
@@ -141,32 +138,32 @@ class PostSDJPAServiceTest {
         Comment comment2 = Comment.builder().id(2L).post(post).build();
         Set<Comment> comments = Set.of(comment1, comment2);
 
-        when(postRepository.findById(POST_ID)).thenReturn(Optional.of(post));
+        when(postRepository.findById(LIKE_ID)).thenReturn(Optional.of(post));
         when(commentRepository.findByPost(post)).thenReturn(comments);
 
-        Set<Comment> result = postService.findAllCommentsByPostId(POST_ID);
+        Set<Comment> result = postService.findAllCommentsByPostId(LIKE_ID);
 
         assertEquals(comments, result);
-        verify(postRepository).findById(POST_ID);
+        verify(postRepository).findById(LIKE_ID);
         verify(commentRepository).findByPost(post);
     }
 
     @Test
     void findAllLikesByPostId() {
         Post post = new Post();
-        post.setId(POST_ID);
+        post.setId(LIKE_ID);
 
         Like like1 = new Like();
         Like like2 = new Like();
         Set<Like> likes = Set.of(like1, like2);
 
-        when(postRepository.findById(POST_ID)).thenReturn(Optional.of(post));
+        when(postRepository.findById(LIKE_ID)).thenReturn(Optional.of(post));
         when(likeRepository.findAllByPost(post)).thenReturn(likes);
 
-        Set<Like> result = postService.findAllLikesByPostId(POST_ID);
+        Set<Like> result = postService.findAllLikesByPostId(LIKE_ID);
 
         assertEquals(likes, result);
-        verify(postRepository, times(1)).findById(POST_ID);
+        verify(postRepository, times(1)).findById(LIKE_ID);
         verify(likeRepository, times(1)).findAllByPost(post);
     }
 
