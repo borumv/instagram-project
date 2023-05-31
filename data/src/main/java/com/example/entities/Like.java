@@ -1,15 +1,17 @@
 package com.example.entities;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.sql.Timestamp;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 @Entity
 @Table(name = "likes")
+@Builder
 public class Like implements BaseEntity<Long>, Seenable{
 
     @Id
@@ -23,11 +25,11 @@ public class Like implements BaseEntity<Long>, Seenable{
     @Column(name = "date_of_like")
     private Timestamp dateOfLike;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
     Post post;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id",
             referencedColumnName = "user_id")
     User user;

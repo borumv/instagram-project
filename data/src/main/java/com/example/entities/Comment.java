@@ -7,6 +7,9 @@ import lombok.*;
 import java.sql.Timestamp;
 import java.util.Set;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Data
 @Entity
 @Table(name = "comments")

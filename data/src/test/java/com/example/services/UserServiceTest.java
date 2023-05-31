@@ -1,5 +1,6 @@
 package com.example.services;
 
+import com.example.entities.Post;
 import com.example.entities.User;
 import com.example.exceptions.UserNotFoundException;
 import com.example.repositories.UserRepository;
@@ -24,14 +25,15 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class UserServiceTest {
     static Long USER_ID = 1L;
-    User user;
-    User user2;
-    User user3;
+
+    private User user;
+    private User user2;
+    private User user3;
     @Mock
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @InjectMocks
-    UserSDJPAService userService;
+    private UserSDJPAService userService;
 
     @BeforeEach
     public void beforeAll() {
