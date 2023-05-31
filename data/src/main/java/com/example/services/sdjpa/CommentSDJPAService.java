@@ -3,10 +3,12 @@ package com.example.services.sdjpa;
 import com.example.entities.Chat;
 import com.example.entities.Comment;
 
+import com.example.entities.Post;
 import com.example.exceptions.CommentNotFoundEWxception;
 import com.example.repositories.ChatRepository;
 import com.example.repositories.CommentRepository;
 import com.example.services.CommentService;
+import com.example.services.PostService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,7 @@ import java.util.Set;
 @Slf4j
 public class CommentSDJPAService implements CommentService {
     private final CommentRepository commentRepository;
+    private final PostService postService;
     @Override
     public Comment findById(Long aLong) {
         return commentRepository.findById(aLong).orElseThrow(() -> {
@@ -49,4 +52,15 @@ public class CommentSDJPAService implements CommentService {
         commentRepository.deleteById(aLong);
     }
 
+    @Override
+    public Set<Comment> findParentsCommentsByPostId(Long postId) {
+        Post post = postService.findById(postId);
+        return commentRepository.findAllByPostAndParentCommentIsNull(post);
+    }
+
+    @Override
+    public Set<Comment> findAllChildComments(Long commentId) {
+
+        return commentRepository.findAllByParentCommentId(commentId);
+    }
 }
