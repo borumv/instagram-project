@@ -11,11 +11,11 @@ DELETE FROM profiles WHERE 1=1;
 DELETE FROM users WHERE 1=1;
 
 -- Заполнение таблицы users
-INSERT INTO users (user_id, first_name, last_name, email, password, date_of_registry, date_of_last_in)
+INSERT INTO users (user_id, first_name, last_name, email, role, date_of_registry, date_of_last_in)
 VALUES
-    (1, 'John', 'Doe', 'john.doe@example.com', 'password123', '2022-01-01', '2022-05-01'),
-    (2, 'Jane', 'Smith', 'jane.smith@example.com', 'password456', '2022-02-01', '2022-05-02'),
-    (3, 'Bob', 'Johnson', 'bob.johnson@example.com', 'password789', '2022-03-01', '2022-05-03');
+    (1, 'John', 'Doe', 'john.doe@example.com', 'USER', '2022-01-01', '2022-05-01'),
+    (2, 'Jane', 'Smith', 'jane.smith@example.com', 'USER', '2022-02-01', '2022-05-02'),
+    (3, 'Bob', 'Johnson', 'bob.johnson@example.com', 'ADMIN', '2022-03-01', '2022-05-03');
 
 -- Заполнение таблицы profiles
 INSERT INTO profiles (user_id, nickname, photo)

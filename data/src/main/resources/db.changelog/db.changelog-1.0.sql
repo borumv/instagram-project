@@ -114,7 +114,7 @@ CREATE TABLE users (
                        first_name VARCHAR(255) NOT NULL,
                        last_name VARCHAR(255) NOT NULL,
                        email VARCHAR(255),
-                       password VARCHAR(255),
+                       password VARCHAR(255) DEFAULT '{noop}123',
                        date_of_registry TIMESTAMP DEFAULT now(),
                        date_of_last_in DATE
 );
